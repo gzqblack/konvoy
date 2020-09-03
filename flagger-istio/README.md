@@ -312,7 +312,8 @@ Promotion completed! Scaling down podinfo.test
 4. 列出集群中所有的金丝雀：
 
 ```
-watch kubectl get canaries --all-namespaces NAMESPACE   NAME      STATUS        WEIGHT   LASTTRANSITIONTIME test        podinfo   Progressing   15       2019-01-16T14:05:07Z prod        frontend  Succeeded     0        2019-01-15T16:15:07Z prod        backend   Failed        0        2019-01-14T17:05:07Z
+NAMESPACE   NAME      STATUS      WEIGHT   LASTTRANSITIONTIME
+test        podinfo   Promoting   0        2020-09-03T14:34:23Z
 ```
 
 5. 如果启用了Slack 通知功能，则会收到以下消息：
