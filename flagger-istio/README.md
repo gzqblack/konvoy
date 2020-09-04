@@ -110,7 +110,7 @@ kubectl logs pod/flagger-xxxxxxxx-xxxxx -n istio-system
 
 ## 安装 Grafana
 
-Flagger 附带 Grafana dashbaord，用于金丝雀分析。在 istio-system namespace 下部署 grafana
+1. Flagger 附带 Grafana dashbaord，用于金丝雀分析。在 istio-system namespace 下部署 grafana
 
 ```
 helm upgrade -i flagger-grafana flagger/grafana \
@@ -121,7 +121,7 @@ helm upgrade -i flagger-grafana flagger/grafana \
 ## 注意 prometheus 的地址要填写正确
 ```
 
-4. 创建 virtual service，用于暴露 Grafana
+2. 创建 virtual service，用于暴露 Grafana
 
 ```
 apiVersion: networking.istio.io/v1alpha3
@@ -167,7 +167,7 @@ kubectl label namespace test istio-injection=enabled
 kubectl apply -k github.com/weaveworks/flagger//kustomize/podinfo
 ```
 
-3, 部署 load testing service ，用于在 canary analysis 过程中产生流量
+3. 部署 load testing service ，用于在 canary analysis 过程中产生流量
 
 ```
 kubectl apply -k github.com/weaveworks/flagger//kustomize/tester
@@ -377,7 +377,7 @@ watch curl http://podinfo-canary:9898/status/500
 watch curl http://podinfo-canary:9898/delay/1
 ```
 
-5. 当一定数量的 failed check 达到了 canary analysis 的 threshold，traffic 会重新路由只 primary，canary 会 scaled 至 0，rollout 呗标记为 failed
+5. 当一定数量的 failed check 达到了 canary analysis 的 threshold，traffic 会重新路由至 primary，canary 会 scaled 至 0，rollout 被标记为 failed
 
 ## 流量镜像
 
