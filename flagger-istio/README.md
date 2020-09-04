@@ -23,7 +23,7 @@ istio-ingressgateway        LoadBalancer   10.0.41.229   a699c30f48a314069858ff9
 
 2. 注册两个域名`app.istio.example.com`, `grafana.istio.example.com` 解析至 external IP.
 
-如果是内部测试，可以将解析写入`/etc/hosts`。
+提示：如果是内部测试，可以直接将解析写入`/etc/hosts`。
 
 ```
 ## istio testing
@@ -106,7 +106,7 @@ kubectl logs pod/flagger-xxxxxxxx-xxxxx -n istio-system
 {"level":"info","ts":"2020-08-20T21:51:37.008Z","caller":"controller/controller.go:173","msg":"Started operator workers"}
 ```
 
-注意，确保 flagger 连接 prometheus 服务器正常。
+注意，确保 flagger  connected prometheus 服务器。
 
 ## 安装 Grafana
 
@@ -303,7 +303,7 @@ Flagger实现了一个控制循环，逐渐将流量转移到金丝雀，同时�
 
 ```
 kubectl -n test set image deployment/podinfo \
-podinfod=quay.io/stefanprodan/podinfo:1.4.1
+podinfod=stefanprodan/podinfo:3.1.1
 ```
 
 2. Flagger检测到deployment的版本已更新，于是开始分析它：
