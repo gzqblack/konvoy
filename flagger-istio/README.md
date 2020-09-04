@@ -84,7 +84,33 @@ helm upgrade -i flagger flagger/flagger \
 ## 注意 prometheus 的地址要填写正确
 ```
 
-可以在任何 namespace 下安装 flagger，只要它可以访问 istio prometheus service 的 9090。Flagger 附带 Grafana dashbaord，用于金丝雀分析。在 istio-system namespace 下部署 grafana
+可以在任何 namespace 下安装 flagger，只要它可以访问 istio prometheus service 的 9090。
+
+4. 查看 Flagger 的log，确认 Flagger 启动正常。
+
+```
+kubectl logs pod/flagger-xxxxxxxx-xxxxx -n istio-system
+```
+
+输出
+
+```
+{"level":"info","ts":"2020-08-20T21:51:36.684Z","caller":"flagger/main.go:112","msg":"Starting flagger version 1.1.0 revision b6d6f32c7f6377e837788db7f7fdb49a25fda057 mesh provider istio"}
+{"level":"info","ts":"2020-08-20T21:51:36.699Z","caller":"flagger/main.go:383","msg":"Connected to Kubernetes API v1.17.8"}
+{"level":"info","ts":"2020-08-20T21:51:36.699Z","caller":"flagger/main.go:239","msg":"Waiting for canary informer cache to sync"}
+{"level":"info","ts":"2020-08-20T21:51:36.799Z","caller":"flagger/main.go:246","msg":"Waiting for metric template informer cache to sync"}
+{"level":"info","ts":"2020-08-20T21:51:36.899Z","caller":"flagger/main.go:253","msg":"Waiting for alert provider informer cache to sync"}
+{"level":"info","ts":"2020-08-20T21:51:37.007Z","caller":"flagger/main.go:163","msg":"Connected to metrics server http://prometheus-kubeaddons-prom-prometheus.kubeaddons:9090"}
+{"level":"info","ts":"2020-08-20T21:51:37.008Z","caller":"server/server.go:29","msg":"Starting HTTP server on port 8080"}
+{"level":"info","ts":"2020-08-20T21:51:37.008Z","caller":"controller/controller.go:164","msg":"Starting operator"}
+{"level":"info","ts":"2020-08-20T21:51:37.008Z","caller":"controller/controller.go:173","msg":"Started operator workers"}
+```
+
+注意，确保 flagger 连接 prometheus 服务器正常。
+
+## 安装 Grafana
+
+Flagger 附带 Grafana dashbaord，用于金丝雀分析。在 istio-system namespace 下部署 grafana
 
 ```
 helm upgrade -i flagger-grafana flagger/grafana \
@@ -328,8 +354,6 @@ test        podinfo   Promoting   0        2020-09-03T14:34:23Z
 
 1. 触发另外一个 canary deployment
 
-
-
 ```
 kubectl -n test set image deployment/podinfo \
 podinfod=stefanprodan/podinfo:3.1.2
@@ -359,3 +383,12 @@ watch curl http://podinfo-canary:9898/delay/1
 
 ![img](https://raw.githubusercontent.com/weaveworks/flagger/master/docs/diagrams/flagger-canary-traffic-mirroring.png)
 
+
+
+## 参考文章
+
+https://www.servicemesher.com/blog/automated-canary-deployments-with-flagger-and-istio/
+
+https://docs.flagger.app/tutorials/istio-progressive-delivery
+
+https://github.com/Ganasagar/flagger-on-konvoy
