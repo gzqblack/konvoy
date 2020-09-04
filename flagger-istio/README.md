@@ -383,7 +383,7 @@ watch curl http://podinfo-canary:9898/delay/1
 
 ![img](https://raw.githubusercontent.com/weaveworks/flagger/master/docs/diagrams/flagger-canary-traffic-mirroring.png)
 
-
+待补充...
 
 ## 参考文章
 
