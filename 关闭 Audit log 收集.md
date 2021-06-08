@@ -2,7 +2,7 @@
 
 Audit logs 是借助于 FluentBit Addon 来实现的，默认是开启收集的。有些情况下是没有必要的，接下来的流程来展示如何关闭 Audit Log 收集。
 
-## Disable Audit Log Collection
+## Disable Audit Log Collection !
 
 1. 更新 `cluster.yaml` 
 
